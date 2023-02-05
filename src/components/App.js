@@ -1,16 +1,25 @@
-import React from "react";
+import React, {useState} from "react";
 import { ReactDOM } from "react-dom";
-
-import firebase from "firebase/compat/app";
+// import firebase from "firebase/compat/app";
+// import firebase from "../firebase";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import "firebase/compat/storage";
-import AppRouter from "./Router";
+import AppRouter from "components/Router";
+// import myFirebase from "../myFirebase";
+import { authService} from "../myFirebase";
 
-console.log(firebase);
+console.log(authService.currentUser);
 
 function App() { 
-  return <AppRouter />;
-}
+  console.log(authService.currentUser);
+  const [isLoggedIn, setIsLoggedIn]=useState(false);
+  return (
+  <>
+      <AppRouter isLoggedIn={isLoggedIn}/>
+    <footer>&copy; Twitter {new Date().getFullYear()}</footer>
+  </>
+  
+)}
 
 export default App;
