@@ -8,6 +8,7 @@ import "firebase/compat/storage";
 import AppRouter from "components/Router";
 // import myFirebase from "../myFirebase";
 import { authService} from "../myFirebase";
+import Auth from "routes/Auth";
 
 console.log(authService.currentUser);
 
@@ -16,6 +17,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn]=useState(false);
   return (
   <>
+    <Auth/>
       <AppRouter isLoggedIn={isLoggedIn}/>
     <footer>&copy; Twitter {new Date().getFullYear()}</footer>
   </>
