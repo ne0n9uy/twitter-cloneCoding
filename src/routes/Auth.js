@@ -1,8 +1,11 @@
+import { authService } from "myFirebase";
 import React, { useState } from "react";
+import {getAuth,signInWithEmailAndPassword, createUserWithEmailAndPassword} from 'firebase/auth';
 
 const Auth=() => {
     const [email, setEmail]= useState("");
     const [password, setPassword]= useState("");
+    const [newAccount, setNewAccount]=useState(true);
 
     const onChange=(event)=>{
         console.log(event.target.name);
@@ -10,19 +13,39 @@ const Auth=() => {
         if(name==="email"){
             setEmail(value);
         }
-            else if (name===setPassword(value));
+        else if (name==="password")
+            setPassword(value);
         }
     
-    const onSubmit=(event)=>{    
+    const onSubmit = async(event)=>{    
         event.preventDefault();
-    }
+        let data;
+        const auth=getAuth();
+        try{
+            if(newAccount){
+        //create account
+                data=await createUserWithEmailAndPassword(
+                auth,email,password
+                );
+            } else{
+        //log in
+                data= await signInWithEmailAndPassword(
+                auth,email,password
+                );
+            }
+        console.log(data);   
+        } catch(error){
+          console.log(error);
+            }
+        }
+    
     return(
         <>
             <div>
                 <form onSubmit={onSubmit}>
                     <input 
                     name="email"
-                    type="text" 
+                    type="email" 
                     placeholder="Email" 
                     required value={email}
                     onChange={onChange}
@@ -36,7 +59,7 @@ const Auth=() => {
                     />
                     <input 
                     type="submit" 
-                    value="Log In" 
+                    value={newAccount? "Create Account": "Log In"} 
                     onChange={onChange}
                     />
                 </form>
@@ -44,7 +67,7 @@ const Auth=() => {
                     <button>Continue with Google</button>
                     <button>Continue with Github</button>
                 </div>
-            </div>;
+            </div>
         </>
     )
 };
