@@ -1,4 +1,3 @@
-import { authService } from "myFirebase";
 import React, { useState } from "react";
 import {getAuth,signInWithEmailAndPassword, createUserWithEmailAndPassword} from 'firebase/auth';
 
